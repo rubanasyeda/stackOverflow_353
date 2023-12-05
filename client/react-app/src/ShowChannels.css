@@ -1,0 +1,75 @@
+/* Add these styles to your existing CSS file or create a new one */
+
+body {
+    font-family: 'Arial', sans-serif; /* Set a default font family */
+  
+  }
+  
+  .header {
+    text-align: center; /* Center the text in the header */
+    font-size: 24px; /* Set font size for the header */
+    color: white; /* Text color */
+    margin-bottom: 20px; /* Bottom margin for the header */
+  }
+  
+  .post-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    
+  }
+  .message-container{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 10%;
+  }
+
+  .message{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .messageUser,content{
+    padding-top: 0%;
+    padding-bottom: 0%;
+  }
+  
+
+  .post {
+    flex: 1 0 300px; /* Adjust the width as needed */
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid lightblue;
+    border-radius: 10px;
+    background-color: #f0f8ff; /* Light blue background color */
+  }
+  .container {
+    border: 1px solid #ddd; /* Border color */
+    background-color: #e0f7fa; /* Light blue background color */
+    border-radius: 10px; /* Curved edges */
+    margin: 10px; /* Margin around each container */
+    padding: 15px; /* Padding inside each container */
+    width: 200px; /* Set a fixed width for each container */
+    display: inline-block; /* Display containers inline */
+    vertical-align: top; /* Align containers to the top of the line */
+    box-sizing: border-box; /* Include padding and border in the total width/height */
+  }
+  
+  .topic {
+    font-size: 18px; /* Set font size for the topic */
+    color: #333; /* Text color */
+    margin-bottom: 8px; /* Bottom margin for topic */
+  }
+  
+  .data {
+    font-size: 14px; /* Set font size for the data */
+    color: #666; /* Text color */
+  }
+  
+  /* Optional: Add some space at the top of the body */
+  body {
+    margin-top: 20px;
+  }
+  

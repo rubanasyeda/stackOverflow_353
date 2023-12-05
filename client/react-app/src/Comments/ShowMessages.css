@@ -1,0 +1,42 @@
+.message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    
+  }
+  
+  .message {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .messageUser {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .content {
+    margin-bottom: 10px;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .reply-section {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .post-message {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  

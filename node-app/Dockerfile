@@ -15,8 +15,10 @@ RUN npm install
 RUN npm install -g express
 RUN npm install -g body-parser
 RUN npm install -g mysql
+RUN npm install -g brypt
 RUN npm add express
 RUN npm add body-parser
 RUN npm add mysql
+RUN npm add bcrypt
 
-CMD ["npm","start"]
+CMD ["nodemon","server.js"]

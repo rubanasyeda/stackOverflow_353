@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./ShowMessages.css"
 import { Comment } from "./Comment.js" 
@@ -14,23 +14,11 @@ export const ShowMessages = () => {
   const [activeComment,setActiveComment] = useState(null);
 
   var { channelId } = useParams();
-  useEffect(() => {
-    fetchMessagesAPI(channelId).then((data)=>{
-      setBackendComments(data)
-    });
-  }, [channelId]);
-
-  useEffect(() => {
-    console.log('Message posted successfully now back end:', backendComments);
-  }, [backendComments]);
-  
   const { auth } = useAuth();
-  //Gets the initial messages that are not replies
+
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parent_id === null
   );
-  // console.log("Backend messages: ",backendComments);
-
 
   const getReplies = comment_Id => {
     return backendComments.filter(backendComment => backendComment.parent_id === comment_Id).sort(
@@ -50,14 +38,13 @@ export const ShowMessages = () => {
   
     postMessageAPI(formData)
       .then((comment) => {
-        console.log('Message posted successfully:', comment.message);
-        setBackendComments((prevComments) => [comment.message, ...prevComments]);
-        // console.log('Message posted successfully now back end:', backendComments);
+        setBackendComments([comment, ...backendComments]);
+        setActiveComment(null);
+
       })
       .catch((error) => {
         console.error('Error posting message:', error);
       });
-      setActiveComment(null);
   };
 
   const deleteComment = (commentId) => {
@@ -70,6 +57,12 @@ export const ShowMessages = () => {
       });
     }
   };
+
+  useEffect(() => {
+    fetchMessagesAPI(channelId).then((data)=>{
+      setBackendComments(data)
+    });
+  }, [backendComments,channelId]);
   
   return (
 
@@ -79,7 +72,6 @@ export const ShowMessages = () => {
       <CommentForm submitLabel="Write" handleSubmit={addComment}/>
       <div className='comments-container'>
         {rootComments.map((rootComment) =>(
-          // <div key={rootComment.message_id}>{rootComment.body}  </div>
           <Comment 
             key={rootComment.message_id} 
             comment={rootComment}
@@ -94,8 +86,6 @@ export const ShowMessages = () => {
         ))}
       </div>
     </div>
-      
-
   );
 };
 

@@ -1,27 +1,17 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState } from "react";
 import "./LoginSignup.css";
 import { SignUpNewUser, login} from "../api/loginops";
-import { Navigate, useNavigate,Link,useLocation } from 'react-router-dom';
-
-//
+import {  useNavigate } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 
 const LoginSignup = () => {
   //
     const {setAuth} = useAuth();
+    // setAuth({});
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
-  
-
-    // const { user, login: authLogin } = useAuth();
     const [action, setAction] = useState("Login");
     const [activeButton, setActiveButton] = useState(null);
     
-
-    //
-    const userRef = useRef();
-    const errRef = useRef();
 
     // State for input values
     const [name, setName] = useState("");
@@ -29,9 +19,8 @@ const LoginSignup = () => {
     const [password, setPassword] = useState("");
     //tutorial
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
-  const handleButtonClick = (clickedAction) => {
+    const handleButtonClick = (clickedAction) => {
 
     // Sign up
     if (clickedAction === action && (name && username && password)) {
@@ -75,9 +64,7 @@ const LoginSignup = () => {
                 const role = response?.role;
                 setAuth({username,password,role,accessToken});
                 navigate("/Landing");
-
-            }
-            
+            }            
           })
           .catch((error) => {
             if(!error?.response){
@@ -85,8 +72,7 @@ const LoginSignup = () => {
             }
             console.log("Error caught: ", error);
           });
-      }
-    
+      }   
     else {
       setAction(clickedAction);
       setActiveButton(clickedAction);

@@ -15,8 +15,6 @@ const Layout = ({ children, location, logout, user }) => {
       <main>
         <Outlet/>
       </main>
-      {/* Fixed navigation bar (conditionally rendered) */}
-      {/* {!isLoginSignupPage && ( */}
 
     </>
   );

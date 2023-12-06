@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./ShowChannels.css"
 import useAuth from '../hooks/useAuth';
@@ -29,7 +29,7 @@ export const ShowChannels = ({ get,set }) => {
     return <p>No channels available</p>;
   }
 
-  const handleChannelClick = (channelId) => {
+  const handleChannelClick = (channelId,channelName) => {
     setSelectedChannel(channelId);
     navigate(`/messages/${channelId}`); // Navigate to the messages page with the channel ID
   };
@@ -49,7 +49,7 @@ export const ShowChannels = ({ get,set }) => {
             <div key={channel.channel_id} className="channel-container">
               <button
                 className="channels"
-                onClick={() => handleChannelClick(channel.channel_id)}
+                onClick={() => handleChannelClick(channel.channel_id,channel.name)}
               >
                 <p className='channelID'>ID: {channel.channel_id}</p>
                 <h3 className='topic'>Channel Name: {channel.name}</h3>

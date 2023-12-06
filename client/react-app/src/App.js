@@ -1,13 +1,11 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter as Router,Routes, Route,Link,Navigate,useLocation} from "react-router-dom";
+import {BrowserRouter as Router,Routes, Route,Link,Navigate,useLocation, useNavigate} from "react-router-dom";
 import { Landing } from './Components/Landing';
 import {CreateChannel} from './Channels/CreateChannel';
 import {ShowChannels} from './Channels/ShowChannels';
-import MyForm from './Components/image';
 import {ShowMessages} from "./Comments/ShowMessages";
 import LoginSignup from './Login/LoginSignup';
-// import { useAuth } from "./Login/AuthContext";
 import Layout from './Components/Layout';
 import Navbar from "./Components/Navbar";
 import RequireAuth from './Components/RequireAuth';
@@ -15,7 +13,6 @@ import useAuth from "./hooks/useAuth";
 import { Users } from './Channels/Users';
 import SearchComponent from './Comments/SearchComponent';
 
-// import React, { useEffect } from 'react';
 
 function App() {
   const [getChannels,setChannel] = useState([]);
@@ -34,20 +31,16 @@ function App() {
     }
   },[getChannels]);
 
-  // const [token, setToken] = useState();
-
   const { auth } = useAuth();
-  const location = useLocation();
 
   return (
     <div className="App">
       <div className='bodyPages'>
-        {/* /// condition here */}
         {auth.username && <Navbar />}
         <Routes>
           <Route path="/" element={<Layout/>}>
             {/** Public routes */}
-            <Route exact path="/Login" element={<LoginSignup />} />
+            <Route exact path="/" element={<LoginSignup />} />
             
             <Route element={<RequireAuth/>} > 
               <Route exact path="/Landing" element={<Landing />} />

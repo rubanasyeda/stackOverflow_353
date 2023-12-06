@@ -1,8 +1,7 @@
 import { useContext } from "react";
-import { Link, Navigate, useNavigate} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import "./Navbar.css";
 
-import LoginSignup from "../Login/LoginSignup";
 import AuthContext from "../Context/AuthProvider";
 
 export const Navbar = ()=>{
@@ -13,7 +12,7 @@ export const Navbar = ()=>{
         // if used in more components, this should be in context 
         // axios to /logout endpoint 
         setAuth({});
-        navigate('/Login');
+        navigate('/');
     }
     return(
 

@@ -8,7 +8,7 @@ const RequireAuth = ({ allowedRoles}) => {
     return(
         auth?.username
             ?<Outlet />
-            : <Navigate to="/Login"/>
+            : <Navigate to="/"/>
     );
 }
 

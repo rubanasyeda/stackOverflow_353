@@ -2,14 +2,29 @@
 
 .landing-container {
   text-align: center;
+  font-size: 25px;
   color: black;
   background-color: #f0f8ff;
   padding: 20px;
   border-radius: 10px;
   margin: 20px auto;
   font-family:Arial, Helvetica, sans-serif;
-  max-width: 600px;
+  max-width: 700px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
 }
 
-/* Add any additional styles as needed */
+.desc{
+  background-color: lavender;
+  border-radius: 10px;
+  padding: 30px;
+  font-size: 20px;
+  width: 600px;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.main-desc{
+  border:black;
+  background-color: lightpink;
+  padding: 5px;
+}

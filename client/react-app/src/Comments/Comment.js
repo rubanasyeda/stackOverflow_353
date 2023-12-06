@@ -91,7 +91,7 @@ export const Comment = ({
                     )}
                     <div className="comment-time">{comment.time}</div>
                 </div>
-                <div className="comment-text">{comment.content}</div>
+                <div className="comment-text" style={{ whiteSpace: 'pre-wrap' }}>{comment.content}</div>
                 <div className="comment-actions">
                     <div className="comment-action" 
                         onClick={()=> setActiveComment({id: comment.message_id, type: "replying"})}>

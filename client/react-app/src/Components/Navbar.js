@@ -30,6 +30,9 @@ export const Navbar = ()=>{
         <Link to="/showChannels">
           <button>Show all Channels</button>
         </Link>
+        <Link to="/search">
+          <button>Search</button>
+        </Link>
         <Link to="/viewUsers">
           <button>View Users</button>
         </Link>

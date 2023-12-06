@@ -13,6 +13,7 @@ import Navbar from "./Components/Navbar";
 import RequireAuth from './Components/RequireAuth';
 import useAuth from "./hooks/useAuth";
 import { Users } from './Channels/Users';
+import SearchComponent from './Comments/SearchComponent';
 
 // import React, { useEffect } from 'react';
 
@@ -55,6 +56,7 @@ function App() {
               <Route path="/viewUsers" element={<Users />} />
               <Route path="/messages/:channelId" element={<ShowMessages />} />
               <Route path="/LoginSignup" element={<LoginSignup />} />
+              <Route path="/search" element={<SearchComponent />} />
             </Route>
 
           </Route>

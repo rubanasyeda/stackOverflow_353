@@ -18,6 +18,7 @@ const CommentForm = ({handleSubmit, submitLabel,parentId=null}) => {
                 className="comment-form-textarea" 
                 value={text} 
                 onChange={(e)=> settext(e.target.value)}
+                style={{ whiteSpace: 'pre-wrap' }}
             />
             <input
             type="file"

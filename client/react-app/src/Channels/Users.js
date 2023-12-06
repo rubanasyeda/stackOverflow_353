@@ -19,6 +19,16 @@ export const Users = () => {
         });
     }, []);
 
+    const getLevel = (numPosts) => {
+      if (numPosts < 10) {
+        return "Beginner";
+      } else if (numPosts < 50) {
+        return "Intermediate";
+      } else {
+        return "Expert";
+      }
+    };
+
     const handleDelete = (username) => {
         if(window.confirm(`Are you sure you want to delete thsi user: ${username}`)){
         deleteUser(username)
@@ -37,6 +47,7 @@ export const Users = () => {
           {users && users.map((user) => (
             <div className="user" key={user.username}>
               <p>Name: {user.name}</p>
+              <p>Level: {getLevel(user.num_posts)}</p>
               <p>Username: {user.username}</p>
               {isAdmin && user.username !== "admin" && <button onClick={() => handleDelete(user.username)}>Delete</button>}
             </div>

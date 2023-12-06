@@ -11,6 +11,7 @@ const fs = require('fs');
 var jwt = require('jsonwebtoken');
 
 const bcrypt = require('bcryptjs');
+const { error } = require('console');
 const saltRounds = 10;
 
 const app = express();
@@ -134,6 +135,7 @@ connection.connect((err) => {
       username VARCHAR(255) DEFAULT NULL,
       hashed_password VARCHAR(255) DEFAULT NULL,
       name VARCHAR(255) DEFAULT NULL,
+      num_posts INT DEFAULT 0,
       role INT NULL,
       INDEX idx_username (username)
     );`
@@ -204,7 +206,7 @@ app.post('/postMessage', upload.single('image'), (req, res) => {
       const insertedMessageId = results.insertId; // Get the ID of the inserted message
 
       console.log('Message added to the database');
-      
+      addUserPosts(user);
       // Send back the inserted data in the response
       res.json({
           success: true,
@@ -219,7 +221,22 @@ app.post('/postMessage', upload.single('image'), (req, res) => {
           }
       });
   });
+
 });
+
+function addUserPosts(username){
+  const user_query = `UPDATE Users SET num_posts = num_posts + 1 WHERE username = '${username}'`;
+  connection.query(user_query,(error,results)=>{
+    if(error){
+      console.error("Could not add post numbers");
+    }
+    else{
+      console.error("Added to posts number for user: ",username);
+    }
+  });
+
+}
+
 
 
 ///////////////////////////////////////
@@ -423,7 +440,7 @@ app.delete('/deleteuser/:username', (req, res) => {
 
 app.get('/getUsers', (req, res) => {
 
-  const query = "SELECT name, username FROM Users";
+  const query = "SELECT name, username,num_posts FROM Users";
 
   connection.query(query, (err, results) => {
     if (err) {
@@ -431,7 +448,7 @@ app.get('/getUsers', (req, res) => {
       res.status(500).send('Error retrieving users');
     } else {
       // Extract only the Name and Username from the results
-      const simplifiedUsers = results.map(user => ({ name: user.name, username: user.username }));
+      const simplifiedUsers = results.map(user => ({ name: user.name, username: user.username, num_posts: user.num_posts }));
 
       console.log('Users retrieved successfully');
       res.status(200).json(simplifiedUsers);
@@ -459,9 +476,112 @@ app.put('/updateCounts/:message_id', async (req, res) => {
 
 });
 
-// app.get('/getCounts/:message_id',(req,res)=>{
-//   const query = ``;
-// })
+//////////////// Search function /////////////////////////
+
+
+app.get('/search/content', async (req, res) => {
+  const { query } = req.query;
+  console.log("Received request in content back");
+  try {
+    // Perform the search logic based on the query in the MySQL database
+    const queryResult = await searchContentInDatabase(query);
+
+    res.json(queryResult);
+  } catch (error) {
+    console.error('Error searching content in the database:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+async function searchContentInDatabase(query) {
+  return new Promise((resolve, reject) => {
+    // Adjust the SQL query based on your database schema
+    const searchQuery = `
+      SELECT * FROM Messages
+      WHERE content LIKE '%${query}%'
+    `;
+
+    connection.query(searchQuery, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+
+app.get('/search/user', async (req, res) => {
+  const { query } = req.query;
+
+  // Construct the SQL query to retrieve messages by the user
+  const searchQuery = `
+    SELECT * FROM Messages
+    WHERE user = ?
+  `;
+
+  const queryString = `${query}`;
+
+  // Execute the query
+  connection.query(searchQuery, [queryString], (error, results, fields) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    // Send the results back to the client
+    res.json(results);
+  });
+});
+
+// Define a route to handle the request for the user with the most posts
+app.get('/search/user/most-posts', async (req, res) => {
+  // Construct the SQL query to retrieve the user with the most posts
+  const searchQuery = `
+    SELECT * FROM Users
+    ORDER BY num_posts DESC
+    LIMIT 1
+  `;
+
+  // Execute the query
+  connection.query(searchQuery, (error, results, fields) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+    console.log("User found: ",results[0].username);
+    // Send the result back to the client
+    res.json(results); // Assuming there is only one user with the most posts
+  });
+});
+
+// Define a route to handle the request for the user with the most posts
+app.get('/search/user/least-posts', async (req, res) => {
+  // Construct the SQL query to retrieve the user with the most posts
+  const searchQuery = `
+    SELECT * FROM Users
+    ORDER BY num_posts
+    LIMIT 1
+  `;
+
+  // Execute the query
+  connection.query(searchQuery, (error, results, fields) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+    console.log("User found: ",results[0].username);
+    // Send the result back to the client
+    res.json(results); // Assuming there is only one user with the most posts
+  });
+});
+
+
+
 
 app.use(express.static('public'));
   

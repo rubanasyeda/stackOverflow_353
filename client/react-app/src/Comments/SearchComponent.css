@@ -1,0 +1,14 @@
+.results {
+    /* Add any overall styling for the results container */
+    padding-top: 30px;
+  }
+  
+  .searchResult {
+    margin-bottom: 10px; /* Add margin to separate each search result */
+  }
+  
+  .resultBox {
+    border: 1px solid #ccc; /* Add a border to create a box around each result */
+    padding: 10px; /* Add padding for spacing within the box */
+  }
+  

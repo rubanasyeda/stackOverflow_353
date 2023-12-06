@@ -4,18 +4,14 @@ import "./ShowMessages.css"
 import { Comment } from "./Comment.js" 
 import CommentForm from './CommentForm.js';
 import { fetchMessages as fetchMessagesAPI } from '../api/messages.js';
-import { postMessage as postMessageAPI} from '../api/messages.js';
+import { postMessage as postMessageAPI, deleteComment as deleteCommentApi} from '../api/messages.js';
 import "./Comments.css";
-// import { useReducer } from 'react';
-
-// ... (imports)
+import useAuth from "../hooks/useAuth";
 
 export const ShowMessages = () => {
 
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment,setActiveComment] = useState(null);
-  // const [newMessage, setNewMessage] = useState('');
-  // const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   var { channelId } = useParams();
   useEffect(() => {
@@ -28,7 +24,7 @@ export const ShowMessages = () => {
     console.log('Message posted successfully now back end:', backendComments);
   }, [backendComments]);
   
-
+  const { auth } = useAuth();
   //Gets the initial messages that are not replies
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parent_id === null
@@ -46,7 +42,7 @@ export const ShowMessages = () => {
   const addComment = (text, parentID, image) => {
     const formData = new FormData();
   
-    formData.append('user', 'user');
+    formData.append('user', auth.username);
     formData.append('content', text);
     formData.append('channel_id', channelId);
     formData.append('parent_id', parentID);
@@ -63,10 +59,18 @@ export const ShowMessages = () => {
       });
       setActiveComment(null);
   };
+
+  const deleteComment = (commentId) => {
+    if (window.confirm(`Are you sure you want to remove comment with ID ${commentId}?`)) {
+      deleteCommentApi(commentId).then(() => {
+        const updatedBackendComments = backendComments.filter(
+          (backendComment) => backendComment.id !== commentId
+        );
+        setBackendComments(updatedBackendComments);
+      });
+    }
+  };
   
-
-
-
   return (
 
     <div className='comments'>
@@ -80,10 +84,12 @@ export const ShowMessages = () => {
             key={rootComment.message_id} 
             comment={rootComment}
             replies={getReplies(rootComment.message_id)}
+            currentUserRole={auth.role}
             getReplies={getReplies}
             activeComment={activeComment}
             setActiveComment={setActiveComment}
             addComment={addComment}
+            deleteComment={deleteComment}
           />
         ))}
       </div>

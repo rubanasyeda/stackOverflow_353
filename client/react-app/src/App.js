@@ -1,11 +1,18 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter as Router,Routes, Route,Link} from "react-router-dom";
-import { Landing } from './Landing';
-import {CreateChannel} from './CreateChannel';
-import {ShowChannels} from './ShowChannels';
-import MyForm from './image';
+import {BrowserRouter as Router,Routes, Route,Link,Navigate,useLocation} from "react-router-dom";
+import { Landing } from './Components/Landing';
+import {CreateChannel} from './Channels/CreateChannel';
+import {ShowChannels} from './Channels/ShowChannels';
+import MyForm from './Components/image';
 import {ShowMessages} from "./Comments/ShowMessages";
+import LoginSignup from './Login/LoginSignup';
+// import { useAuth } from "./Login/AuthContext";
+import Layout from './Components/Layout';
+import Navbar from "./Components/Navbar";
+import RequireAuth from './Components/RequireAuth';
+import useAuth from "./hooks/useAuth";
+import { Users } from './Channels/Users';
 
 // import React, { useEffect } from 'react';
 
@@ -26,39 +33,36 @@ function App() {
     }
   },[getChannels]);
 
+  // const [token, setToken] = useState();
+
+  const { auth } = useAuth();
+  const location = useLocation();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <div>
-          <Router>
-            <Link to="/">
-                <button>Landing</button>
-            </Link>
-            <Link to= "/createChannel">
-                <button>Create New Channel</button>
-            </Link>
-            <Link to="/showChannels">
-                <button>Show all Channels</button>
-            </Link>
-            <Link to="/imageform">
-                <button>Image form</button>
-            </Link>
-            <div className='bodyPages'>
-              <Routes>
-                  <Route exact path = "/" element={<Landing />}/>
-                  <Route path = "/createChannel" element={<CreateChannel set={setChannel}/>}/>
-                  <Route path = "/showChannels" element={<ShowChannels get={getChannels}/>}/>
-                  <Route path = "/imageform" element={<MyForm/>}/>
-                  <Route path="/messages/:channelId" element={<ShowMessages />} />
-              </Routes>
-            </div>
-          </Router>
-          
-        </div>
-      </header>
-      
+      <div className='bodyPages'>
+        {/* /// condition here */}
+        {auth.username && <Navbar />}
+        <Routes>
+          <Route path="/" element={<Layout/>}>
+            {/** Public routes */}
+            <Route exact path="/Login" element={<LoginSignup />} />
+            
+            <Route element={<RequireAuth/>} > 
+              <Route exact path="/Landing" element={<Landing />} />
+              <Route path="/createChannel" element={<CreateChannel set={setChannel} />} />
+              <Route path="/showChannels" element={<ShowChannels get={getChannels} set={setChannel} />} />
+              <Route path="/viewUsers" element={<Users />} />
+              <Route path="/messages/:channelId" element={<ShowMessages />} />
+              <Route path="/LoginSignup" element={<LoginSignup />} />
+            </Route>
+
+          </Route>
+        </Routes>
+      </div>
     </div>
   );
 }
+
 
 export default App;

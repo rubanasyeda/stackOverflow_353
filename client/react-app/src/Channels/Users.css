@@ -1,0 +1,31 @@
+/* Users.css */
+
+  .user-container {
+    display: flex;
+    flex-direction: column; /* Align children vertically */
+    align-items: center; /* Center items horizontally */
+    padding: 70px;
+    max-width: 600px; /* Set a fixed width for .user-container */
+    margin: 0 auto; /* Center .user-container horizontally */
+  }
+  .user {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%; /* Expand .user to fill the width of .user-container */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    border-radius: 20px;
+  }
+  
+  .user button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .user button:hover {
+    background-color: #bd2130;
+  }
+  

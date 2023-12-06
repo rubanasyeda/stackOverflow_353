@@ -1,11 +1,10 @@
 import "./Comments.css";
 import { useState } from "react";
 
-const CommentForm = ({handleSubmit, submitLabel}) => {
+const CommentForm = ({handleSubmit, submitLabel,parentId=null}) => {
     const [text,settext] = useState("");
     const [image, setImage] = useState(null);
-    const [user, setUser] = useState('');
-    const [parentId, setParentId] = useState(null);
+    // const [parentId, setParentId] = useState(null);
 
     const isTextareaDisabled = text.length ===0;
     const onSubmit = (event) =>{
@@ -22,7 +21,7 @@ const CommentForm = ({handleSubmit, submitLabel}) => {
             />
             <input
             type="file"
-            accept="image/*"
+            // accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
             />
             <button className="comment-form-button" disabled={isTextareaDisabled}>

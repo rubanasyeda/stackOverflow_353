@@ -1,4 +1,4 @@
-
+import axios from "axios";
 
 export const fetchMessages = async (channelId) => {
     try {
@@ -34,3 +34,57 @@ export const fetchMessages = async (channelId) => {
       throw error;
     }
 };
+
+export const deleteComment = async (message_id) => {
+  try{
+    const response = await axios.delete(`http://localhost:80/deleteMessage/${message_id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Could not send login data in axios: ", error);
+  }
+
+}
+
+
+export const deleteChannel = async (channel_id) => {
+  try{
+    const response = await axios.delete(`http://localhost:80/deleteChannel/${channel_id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Could not send login data in axios: ", error);
+  }
+}
+
+export const deleteUser = async (username) => {
+  try{
+    const response = await axios.delete(`http://localhost:80/deleteUser/${username}`);
+    return response.data;
+  } catch (error) {
+    console.error("Could not send login data in axios: ", error);
+  }
+} 
+
+export const updateCountsOnBackend = async (message_id,like,dislike) => {
+  try {
+    // Send a PUT request to update the counts on the backend
+    console.log("like: ",like," dislikes: ",dislike);
+    const response = await axios.put(`http://localhost:80/updateCounts/${message_id}`, {
+      likes: like,
+      dislikes: dislike,
+    });
+    // Handle the response if needed
+    console.log('Backend response:', response.data);
+  } catch (error) {
+    console.error('Error updating counts on the backend:', error);
+  }
+};
+
+
+export const getUsers = async () => {
+  try{
+    const response = await axios.get(`http://localhost:80/getUsers`);
+    return response.data;
+  } catch (error) {
+    console.error("Could not send login data in axios: ", error);
+  }
+}

@@ -1,106 +1,81 @@
-.comments {
-    margin-top: 20px;
-  }
-  
-  .comments-title {
-    font-size: 30px;
-    margin-bottom: 20px;
-  }
-  
-  .comments-container {
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  
-  .comment-form-title {
-    font-size: 22px;
-  }
-  
-  .comment-form-textarea {
-    width: 100%;
-    height: 80px;
-    margin-bottom: 8px;
-    margin-top: 8px;
-    border: 1px solid rgb(107, 114, 12);
-  }
-  
-  .comment-form-button {
-    font-size: 16px;
-    padding: 8px 16px;
-    background: rgb(59, 130, 246);
-    border-radius: 8px;
-    color: white;
-  }
+.comment {
+  display: flex;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 
-  .img-icon {
-    width:30px;
-    height:30px;
-  }
-  
-  .comment-form-button:hover:enabled {
-    cursor: pointer;
-    background: rgb(37, 99, 235);
-  }
-  
-  .comment-form-button:disabled {
-    opacity: 0.7;
-    cursor: default;
-  }
-  
-  .comment-form-cancel-button {
-    margin-left: 10px;
-  }
-  
-  .comment {
-    display: flex;
-    margin-bottom: 28px;
-  }
-  
-  .comment-image-container {
-    margin-right: 12px;
-  }
-  
-  .comment-image-container img {
-    border-radius: 50px;
-  }
-  
-  .comment-right-part {
-    width: 100%;
-  }
-  
-  .comment-content {
-    display: flex;
-  }
-  
-  .comment-author {
-    margin-right: 8px;
-    font-size: 20px;
-    color: rgb(59, 130, 246);
-  }
-  
-  .comment-time{
-    font-size: 12px;
-  }
-  .comment-text {
-    font-size: 18px;
-  }
-  
-  .comment-actions {
-    display: flex;
-    font-size: 12px;
-    color: white;
-    cursor: pointer;
-    margin-top: 8px;
-  }
-  
-  .comment-action {
-    margin-right: 8px;
-  }
-  
-  .comment-action:hover {
-    text-decoration: underline;
-  }
-  
-  .replies {
-    margin-top: 20px;
-  }
+.comment-image-container {
+  margin-right: 15px;
+}
+
+.img-icon {
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Adjust the size as needed */
+  border-radius: 50%;
+}
+
+.comment-right-part {
+  flex: 1;
+}
+
+.comment-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-author {
+  font-weight: bold;
+  font-size: 14px; /* Adjust the size as needed */
+}
+
+.comment-time {
+  color: #888;
+  font-size: 12px; /* Adjust the size as needed */
+}
+
+.comment-text {
+  margin-bottom: 10px;
+  font-size: 14px; /* Adjust the size as needed */
+}
+
+.comment-actions {
+  display: flex;
+}
+
+.comment-action {
+  margin-right: 10px;
+  cursor: pointer;
+  color: #0079d3; /* Reddit's primary blue color */
+  font-size: 14px; /* Adjust the size as needed */
+}
+
+.comment-action:hover {
+  text-decoration: underline;
+}
+
+.replies {
+  margin-top: 15px;
+  padding-left: 30px;
+  border-left: 1px solid #ddd;
+
+}
+
+/* Align main comment text to the left */
+.comment-text {
+  text-align: left;
+}
+
+.comment-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5%;
+}
+.comments-container {
+  display: flex;
+  flex-direction: column-reverse; /* Reverse the order of top-level comments */
+}

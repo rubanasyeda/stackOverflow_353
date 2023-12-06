@@ -2,6 +2,7 @@
 // import { response } from 'express';
 import React from 'react';
 import { useState } from 'react';
+import "./CreateChannel.css";
 
 export const CreateChannel = ({set}) => {
     const [getChannnelName,setChannelName] = useState([]);
